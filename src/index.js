@@ -1,18 +1,17 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
 
-const routes = require('./routes');
+const express = require('express')
+cors = require('cors')
+const dotenv = require('dotenv')
+const userRoute= require('./routes/userRoute')
 
+dotenv.config();
 const app = express();
 
-app.use(cors());
-app.use(morgan(':method :url :status :user-agent - :response-time ms'));
-app.use(bodyParser.json());
 
-app.use('/', routes);
+app.use(express.json())
+app.use(userRoute)
 
-app.listen(process.env.PORT || 3000, function() {
-	console.log('Express app running on port ' + (process.env.PORT || 3000))
-});
+const PORT = process.env || 1301
+app.listen(PORT, (error) =>{
+	error ? console.error(error): console.log('App is running')
+})
